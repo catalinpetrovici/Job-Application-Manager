@@ -1,6 +1,7 @@
-import startServer from './utils/startServer.js';
 import express from 'express';
 const app = express();
+
+import startServer from './utils/startServer.js';
 
 // middleware
 import notFoundMiddleware from './middleware/not-found.js';
