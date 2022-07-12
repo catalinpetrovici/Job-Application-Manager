@@ -1,5 +1,6 @@
 import express from 'express';
 const app = express();
+import 'express-async-errors';
 
 import startServer from './utils/startServer.js';
 
