@@ -13,6 +13,17 @@ export default defineConfig(({ command, mode }) => {
     mode === 'production' ? '[hash:base64:2]' : '[local]_[hash:base64:2]';
   return {
     plugins: [react()],
+    server: {
+      host: true,
+      port: 3000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+    },
     css: {
       modules: {
         localsConvention: 'camelCase',

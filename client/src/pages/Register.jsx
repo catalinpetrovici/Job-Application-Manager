@@ -11,7 +11,8 @@ const initialState = {
 };
 
 const Register = () => {
-  const { isLoading, showAlert, displayAlert, clearAlert } = useAppContext();
+  const { isLoading, showAlert, displayAlert, clearAlert, registerUser } =
+    useAppContext();
 
   const [values, setValues] = useState(initialState);
 
@@ -19,12 +20,21 @@ const Register = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {}, []);
+
   const onSubmit = (e) => {
     e.preventDefault();
     const { name, email, password, isMember } = values;
     if (!email || !password || (!isMember && !name)) {
       displayAlert();
       return;
+    }
+
+    const currentUser = { name, email, password };
+    if (isMember) {
+      console.log('already a member');
+    } else {
+      registerUser(currentUser);
     }
 
     clearAlert();
@@ -64,7 +74,7 @@ const Register = () => {
           value={values.password}
           handleChange={handleChange}
         />
-        <button type='submit' className='btn btn-block'>
+        <button type='submit' className='btn btn-block' disabled={isLoading}>
           submit
         </button>
         <p>
