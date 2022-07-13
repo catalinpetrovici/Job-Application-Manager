@@ -1,0 +1,2 @@
+[0mPOST /api/v1/auth/register [32m201[0m 196.797 ms - 310[0m
+::1 - - [13/Jul/2022:09:17:24 +0000] "POST /api/v1/auth/register HTTP/1.1" 201 309 "-" "PostmanRuntime/7.29.0"
