@@ -1,5 +1,7 @@
 import express from 'express';
 const router = express.Router();
+import authenticateUser from '../middleware/auth.js';
+
 import {
   createJob,
   deleteJob,
@@ -8,10 +10,10 @@ import {
   showStats,
 } from '../controllers/jobControllers.js';
 
-router.get('/', getAllJobs);
-router.post('/', createJob);
-router.get('/stats', showStats);
-router.patch('/:id', updateJob);
-router.delete('/:id', deleteJob);
+router.get('/', authenticateUser, getAllJobs);
+router.post('/', authenticateUser, createJob);
+router.get('/stats', authenticateUser, showStats);
+router.patch('/:id', authenticateUser, updateJob);
+router.delete('/:id', authenticateUser, deleteJob);
 
 export default router;

@@ -57,8 +57,9 @@ const login = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+  console.log(req.user);
   res.status(200).json({ msg: 'updateUser' });
-  user.save();
+  // user.save();
 };
 
 export { register, login, updateUser };
