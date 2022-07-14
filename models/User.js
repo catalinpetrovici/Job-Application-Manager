@@ -5,47 +5,50 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Please provide name'],
-    minlength: 3,
-    maxlength: 50,
-    trim: true,
-  },
-  email: {
-    // https://mongoosejs.com/docs/validation.html#custom-validators
-    type: String,
-    required: [true, 'Please provide email'],
-    validate: {
-      validator: validator.isEmail,
-      message: 'Please provide valid email',
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Please provide name'],
+      minlength: 3,
+      maxlength: 50,
+      trim: true,
     },
-    unique: true,
+    email: {
+      // https://mongoosejs.com/docs/validation.html#custom-validators
+      type: String,
+      required: [true, 'Please provide email'],
+      validate: {
+        validator: validator.isEmail,
+        message: 'Please provide valid email',
+      },
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, 'Please provide password'],
+      minlength: 6,
+      select: false,
+    },
+    lastName: {
+      type: String,
+      minlength: 3,
+      maxlength: 50,
+      default: 'last name',
+    },
+    location: {
+      type: String,
+      trim: true,
+      maxlength: 20,
+      default: 'my city',
+    },
   },
-  password: {
-    type: String,
-    required: [true, 'Please provide password'],
-    minlength: 6,
-    select: false,
-  },
-  lastName: {
-    type: String,
-    minlength: 3,
-    maxlength: 50,
-    default: 'last name',
-  },
-  location: {
-    type: String,
-    trim: true,
-    maxlength: 20,
-    default: 'my city',
-  },
-});
+  { timestamps: true }
+);
 
 UserSchema.pre('save', async function () {
-  // console.log(this.modifiedPaths());
-  // console.log(this.isModified('name'));
+  console.log(this.modifiedPaths());
+  console.log(this.isModified('name'));
 
   if (!this.isModified('password')) return;
   const salt = await bcrypt.genSalt(10);
