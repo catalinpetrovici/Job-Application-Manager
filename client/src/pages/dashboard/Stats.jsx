@@ -16,9 +16,8 @@ const Stats = () => {
 
   return (
     <>
-      <StatsContainer>
-        {monthlyApplications.length > 0 && <ChartsContainer />}
-      </StatsContainer>
+      <StatsContainer></StatsContainer>
+      {monthlyApplications.length > 0 && <ChartsContainer />}
     </>
   );
 };
