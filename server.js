@@ -15,6 +15,16 @@ import jobsRouter from './routes/jobRoutes.js';
 import notFoundMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
 
+// client
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// when ready to deploy
+app.use(express.static(path.resolve(__dirname, './client/dist')));
+
 morganStart(app);
 app.use(cors());
 app.use(express.json());
@@ -25,6 +35,10 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', jobsRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
