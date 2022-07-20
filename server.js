@@ -20,18 +20,24 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
+// security package
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import mongoSanitize from 'express-mongo-sanitize';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // when ready to deploy
 app.use(express.static(path.resolve(__dirname, './client/dist')));
 
 morganStart(app);
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 
-app.get('/', (req, res) => {
-  res.json({ msg: 'Welcome' });
-});
+// Limit Requests
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', jobsRouter);
